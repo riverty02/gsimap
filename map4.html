@@ -71,18 +71,18 @@ const gsimap_init = function(map, layer) {
 
     // SPARQLエンドポイント
     setSPARQLEndpoint("https://sparql.opendata.cc/data/sparql")
-
+#select * { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://odp.jig.jp/odp/1.0#FoodBusinessLicenseAcquisitionFacility>. } limit 10
     // SPARQLクエリー
 	var query = `
-        prefix ic: <http://imi.go.jp/ns/core/rdf#>
-        prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+        prefix ic: <http://odp.jig.jp/odp/1.0#FoodBusinessLicenseAcquisitionFacility>
+        prefix xsd: <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
         
 		select ?uri ?name ?lat ?lng {
 			?uri ic:名称 [ ic:表記 ?name ].
 			?uri ic:地理座標 [ ic:緯度 ?lat; ic:経度 ?lng; ].
 			filter(xsd:float(?lat) < 35.7 && xsd:float(?lng) > 139.7 &&
                                xsd:float(?lat) > 35.6 && xsd:float(?lng) < 139.8)
-        } limit 100
+        } limit 10
     `
 
 	querySPARQL(query, function(data) {
